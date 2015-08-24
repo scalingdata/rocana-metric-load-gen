@@ -27,7 +27,10 @@
   <version>1.0.0-SNAPSHOT</version>
 
   <licenses>
-    <license>Apache License 2.0</license>
+    <license>
+      <name>Apache License 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
   </licenses>
 
   <build>
