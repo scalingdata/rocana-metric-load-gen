@@ -26,6 +26,10 @@
   <artifactId>rocana-transform-action-plugin</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
+  <licenses>
+    <license>Apache License 2.0</license>
+  </licenses>
+
   <build>
     <plugins>
       <plugin>
@@ -124,6 +128,7 @@
       <version>1.7.5</version>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
 </project>
