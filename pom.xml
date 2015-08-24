@@ -57,6 +57,10 @@
       <id>com.rocana</id>
       <url>http://repository.rocana.com/content/groups/com.scalingdata/</url>
     </repository>
+    <repository>
+      <id>com.cloudera.releases</id>
+      <url>http://repository.rocana.com/content/repositories/com.cloudera.releases/</url>
+    </repository>
   </repositories>
 
   <dependencies>
