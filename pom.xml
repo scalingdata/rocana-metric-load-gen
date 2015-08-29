@@ -49,7 +49,7 @@
 
   <repositories>
     <!--
-      Rocana libraries are distributed via the Rocana Maven Repository. Tos
+      Rocana libraries are distributed via the Rocana Maven Repository. To
       search the repository for artifacts and versions, visit
       http://repository.rocana.com/
     -->
