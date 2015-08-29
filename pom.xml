@@ -66,6 +66,16 @@
   <dependencies>
 
     <!--
+      Since we're building a plugin that will execute in the context of one of
+      the Rocana consumers, many of the dependencies we require are actually
+      already provided by the system at runtime. We mark dependencies we know
+      will be provided by the container as such. Any dependencies required by
+      custom plugins that are not provided by the container should be marked
+      as scope 'compile' (the default) and included on the consumer's classpath
+      at deployment time.
+    -->
+
+    <!--
       rocana-core contains the Event classes commonly required for
       transformations.
     -->
@@ -73,6 +83,7 @@
       <groupId>com.rocana</groupId>
       <artifactId>rocana-core</artifactId>
       <version>1.2.1</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--
@@ -83,6 +94,7 @@
       <groupId>com.rocana</groupId>
       <artifactId>rocana-transform</artifactId>
       <version>1.2.1</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--
@@ -94,6 +106,7 @@
       <groupId>com.rocana</groupId>
       <artifactId>rocana-configuration</artifactId>
       <version>1.0.1</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--
@@ -105,6 +118,7 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.5</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--
@@ -115,6 +129,7 @@
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>15.0</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
