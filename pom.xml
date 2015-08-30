@@ -33,12 +33,24 @@
     </license>
   </licenses>
 
+  <properties>
+    <!-- Dependency versions -->
+    <version.rocana>1.2.3</version.rocana>
+    <version.rocana-configuration>1.0.1</version.rocana-configuration>
+    <version.slf4j>1.7.5</version.slf4j>
+    <version.guava>15.0</version.guava>
+    <version.junit>4.11</version.junit>
+
+    <!-- Plugin versions -->
+    <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>${version.maven-compiler-plugin}</version>
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
@@ -82,7 +94,7 @@
     <dependency>
       <groupId>com.rocana</groupId>
       <artifactId>rocana-core</artifactId>
-      <version>1.2.3</version>
+      <version>${version.rocana}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -93,7 +105,7 @@
     <dependency>
       <groupId>com.rocana</groupId>
       <artifactId>rocana-transform</artifactId>
-      <version>1.2.3</version>
+      <version>${version.rocana}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -105,7 +117,7 @@
     <dependency>
       <groupId>com.rocana</groupId>
       <artifactId>rocana-configuration</artifactId>
-      <version>1.0.1</version>
+      <version>${version.rocana-configuration}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -117,7 +129,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.5</version>
+      <version>${version.slf4j}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -128,14 +140,14 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>15.0</version>
+      <version>${version.guava}</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>${version.junit}</version>
       <scope>test</scope>
     </dependency>
 
@@ -147,7 +159,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.5</version>
+      <version>${version.slf4j}</version>
       <scope>test</scope>
     </dependency>
 
