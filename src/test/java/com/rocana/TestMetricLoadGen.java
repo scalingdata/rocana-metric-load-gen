@@ -25,6 +25,9 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Duration;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -88,6 +91,60 @@ public class TestMetricLoadGen {
     Assert.assertEquals("8.756|g", eventList.get(4).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
 
     logger.debug("Output events:{}", Joiner.on(",").join(events));
+  }
+
+  @Test
+  public void testMetricLoadGenTime() throws IOException {
+    ConfigurationParser parser = new ConfigurationParser();
+
+    ActionEngine<Event> engine = null;
+
+    try (InputStream inputStream = Resources.getResource("test-gen-metric-load-time.conf").openStream()) {
+      engine = parser.parse(new InputStreamReader(inputStream), ActionEngine.class);
+    }
+    Event input = Event.newBuilder()
+      .setTs(System.currentTimeMillis())
+      .setEventTypeId(EventTypeIds.HOST_METRIC_RECORD)
+      .setLocation("dc1/rack2")
+      .setHost("example-dn01.int.example.com")
+      .setService("")
+      .setAttributes(ImmutableMap.of("m.rocana.host.cpu.1.perc_idle", "8.756|g"))
+      .build();
+
+    Iterable<Event> events = engine.transform(input);
+
+    Assert.assertNotNull("Event iterable is null after transformation", events);
+
+    List<Event> eventList = Lists.newArrayList(events);
+    Assert.assertEquals(4, eventList.size());
+
+    Assert.assertEquals("example-dn0001.int.example.com", eventList.get(0).getHost());
+    Assert.assertEquals("dc1/rack0001", eventList.get(0).getLocation());
+    Assert.assertEquals("8.756|g", eventList.get(0).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
+    Assert.assertEquals(tsMinusDays(input.getTs(), 1), eventList.get(0).getTs().longValue());
+
+    Assert.assertEquals("example-dn0001.int.example.com", eventList.get(1).getHost());
+    Assert.assertEquals("dc1/rack0001", eventList.get(1).getLocation());
+    Assert.assertEquals("8.756|g", eventList.get(1).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
+    Assert.assertEquals(tsMinusDays(input.getTs(), 2), eventList.get(1).getTs().longValue());
+
+    Assert.assertEquals("example-dn0001.int.example.com", eventList.get(2).getHost());
+    Assert.assertEquals("dc1/rack0001", eventList.get(2).getLocation());
+    Assert.assertEquals("8.756|g", eventList.get(2).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
+    Assert.assertEquals(tsMinusDays(input.getTs(), 3), eventList.get(2).getTs().longValue());
+
+    Assert.assertEquals("example-dn01.int.example.com", eventList.get(3).getHost());
+    Assert.assertEquals("dc1/rack2", eventList.get(3).getLocation());
+    Assert.assertEquals("8.756|g", eventList.get(3).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
+    Assert.assertEquals(input.getTs(), eventList.get(3).getTs());
+
+    logger.debug("Output events:{}", Joiner.on(",").join(events));
+  }
+
+  private long tsMinusDays(long ts, long days) {
+    Duration duration = Duration.standardDays(days);
+    DateTime dateTime = new DateTime(ts, DateTimeZone.UTC);
+    return dateTime.minus(duration).getMillis();
   }
 
 }

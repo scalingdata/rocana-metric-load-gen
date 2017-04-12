@@ -23,6 +23,9 @@ import com.rocana.transform.ActionContext;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,14 +49,16 @@ public class MetricLoadGen implements Action {
   private Pattern locationPattern;
   private long numHosts;
   private long numLocations;
+  private long numDays;
   private String destination;
 
   public MetricLoadGen(Pattern hostPattern, Pattern locationPattern, long numHosts, long numLocations,
-    String destination) {
+    long numDays, String destination) {
     this.hostPattern = hostPattern;
     this.locationPattern = locationPattern;
     this.numHosts = numHosts;
     this.numLocations = numLocations;
+    this.numDays = numDays;
     this.destination = destination;
 
     logger.trace("Action: MetricLoadGen. hostPattern:{} locationPattern:{} numHosts:{} numLocations:{} destination:{}",
@@ -78,8 +83,13 @@ public class MetricLoadGen implements Action {
           for (long locationNum = 1; locationNum <= numLocations; locationNum++) {
             String newLocation = String.format("%s%04d%s", locationMatcher.group(1), locationNum,
               locationMatcher.group(3));
-            Event newEvent = Event.newBuilder(event).setHost(newHost).setLocation(newLocation).build();
-            outputEvents.add(newEvent);
+            for (long dayNum = 1; dayNum <= numDays; dayNum++) {
+              Duration duration = Duration.standardDays(dayNum);
+              DateTime dateTime = new DateTime(event.getTs().longValue(), DateTimeZone.UTC);
+              long newTs = dateTime.minus(duration).getMillis();
+              Event newEvent = Event.newBuilder(event).setHost(newHost).setLocation(newLocation).setTs(newTs).build();
+              outputEvents.add(newEvent);
+            }
           }
         }
       }
@@ -97,6 +107,7 @@ public class MetricLoadGen implements Action {
       .add("locationPattern", locationPattern)
       .add("numHosts", numHosts)
       .add("numLocations", numLocations)
+      .add("numDays", numDays)
       .add("destination", destination)
       .toString();
   }

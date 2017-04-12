@@ -31,6 +31,7 @@ public class MetricLoadGenBuilder implements ActionBuilder<MetricLoadGen> {
   private Pattern locationPattern;
   private long numHosts = 1;
   private long numLocations = 1;
+  private long numDays = 1;
   private String destination;
 
   @Override
@@ -40,7 +41,7 @@ public class MetricLoadGenBuilder implements ActionBuilder<MetricLoadGen> {
     Preconditions.checkNotNull(destination, "Parameter destination is not configured!");
 
     // Return a new instance of MetricLoadGen.
-    return new MetricLoadGen(hostPattern, locationPattern, numHosts, numLocations, destination);
+    return new MetricLoadGen(hostPattern, locationPattern, numHosts, numLocations, numDays, destination);
   }
 
   public Pattern getHostPattern() {
@@ -79,6 +80,15 @@ public class MetricLoadGenBuilder implements ActionBuilder<MetricLoadGen> {
     this.numLocations = numLocations;
   }
 
+  public long getNumDays() {
+    return numDays;
+  }
+
+  @ConfigurationProperty(name = "num-days")
+  public void setNumDays(long numDays) {
+    this.numDays = numDays;
+  }
+
   public String getDestination() {
     return destination;
   }
@@ -95,6 +105,7 @@ public class MetricLoadGenBuilder implements ActionBuilder<MetricLoadGen> {
       .add("locationPattern", locationPattern)
       .add("numHosts", numHosts)
       .add("numLocations", numLocations)
+      .add("numDays", numDays)
       .add("destination", destination)
       .toString();
   }
