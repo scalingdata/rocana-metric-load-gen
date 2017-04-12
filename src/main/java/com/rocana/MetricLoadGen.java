@@ -83,7 +83,7 @@ public class MetricLoadGen implements Action {
           for (long locationNum = 1; locationNum <= numLocations; locationNum++) {
             String newLocation = String.format("%s%04d%s", locationMatcher.group(1), locationNum,
               locationMatcher.group(3));
-            for (long dayNum = 1; dayNum <= numDays; dayNum++) {
+            for (long dayNum = 0; dayNum < numDays; dayNum++) {
               Duration duration = Duration.standardDays(dayNum);
               DateTime dateTime = new DateTime(event.getTs().longValue(), DateTimeZone.UTC);
               long newTs = dateTime.minus(duration).getMillis();

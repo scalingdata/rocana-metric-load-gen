@@ -121,17 +121,17 @@ public class TestMetricLoadGen {
     Assert.assertEquals("example-dn0001.int.example.com", eventList.get(0).getHost());
     Assert.assertEquals("dc1/rack0001", eventList.get(0).getLocation());
     Assert.assertEquals("8.756|g", eventList.get(0).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
-    Assert.assertEquals(tsMinusDays(input.getTs(), 1), eventList.get(0).getTs().longValue());
+    Assert.assertEquals(tsMinusDays(input.getTs(), 0), eventList.get(0).getTs().longValue());
 
     Assert.assertEquals("example-dn0001.int.example.com", eventList.get(1).getHost());
     Assert.assertEquals("dc1/rack0001", eventList.get(1).getLocation());
     Assert.assertEquals("8.756|g", eventList.get(1).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
-    Assert.assertEquals(tsMinusDays(input.getTs(), 2), eventList.get(1).getTs().longValue());
+    Assert.assertEquals(tsMinusDays(input.getTs(), 1), eventList.get(1).getTs().longValue());
 
     Assert.assertEquals("example-dn0001.int.example.com", eventList.get(2).getHost());
     Assert.assertEquals("dc1/rack0001", eventList.get(2).getLocation());
     Assert.assertEquals("8.756|g", eventList.get(2).getAttributes().get("m.rocana.host.cpu.1.perc_idle"));
-    Assert.assertEquals(tsMinusDays(input.getTs(), 3), eventList.get(2).getTs().longValue());
+    Assert.assertEquals(tsMinusDays(input.getTs(), 2), eventList.get(2).getTs().longValue());
 
     Assert.assertEquals("example-dn01.int.example.com", eventList.get(3).getHost());
     Assert.assertEquals("dc1/rack2", eventList.get(3).getLocation());
